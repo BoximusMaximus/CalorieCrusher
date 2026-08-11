@@ -15,7 +15,8 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - ./.env
+      - ./db/.env
+      - ./backend/.env
     volumes:
       - ./db/calorie_crusher_proj:/app
     depends_on:
