@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:15
+    container_name: cc-db
+    env_file:
+      - ./db/.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+
+  # django:
+  #   build: ./ecom_proj/.
+  #   container_name: assignment-django-container
+  #   ports:
+  #     - "8000:8000"
+  #   env_file:
+  #     - ./.env
+  #   volumes:
+  #     - ./ecom_proj:/app
+  #   depends_on:
+  #     - db
