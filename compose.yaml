@@ -10,7 +10,7 @@ services:
       - ./db/data:/var/lib/postgresql/data
 
   django:
-    build: ./backend/.
+    build: ./backend/calorie_crusher_proj/.
     container_name: cc-django-container
     ports:
       - "8000:8000"
@@ -18,6 +18,6 @@ services:
       - ./db/.env
       - ./backend/.env
     volumes:
-      - ./db/calorie_crusher_proj:/app
+      - ./backend/calorie_crusher_proj/:/app
     depends_on:
       - db
