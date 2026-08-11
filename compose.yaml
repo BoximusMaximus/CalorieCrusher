@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:15
-    container_name: cc-db
+    container_name: cc-db-container
     env_file:
       - ./db/.env
     ports:
@@ -9,14 +9,14 @@ services:
     volumes:
       - ./db/data:/var/lib/postgresql/data
 
-  # django:
-  #   build: ./ecom_proj/.
-  #   container_name: assignment-django-container
-  #   ports:
-  #     - "8000:8000"
-  #   env_file:
-  #     - ./.env
-  #   volumes:
-  #     - ./ecom_proj:/app
-  #   depends_on:
-  #     - db
+  django:
+    build: ./backend/.
+    container_name: cc-django-container
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    volumes:
+      - ./db/calorie_crusher_proj:/app
+    depends_on:
+      - db

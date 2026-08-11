@@ -1,1 +1,1 @@
-docker exec -it cc-db bash
+docker exec -it cc-db-container bash
