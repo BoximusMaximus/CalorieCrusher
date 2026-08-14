@@ -19,7 +19,7 @@ class User (models.Model):
     )
     weight_ib:float = models.DecimalField(
         max_digits=5,
-        decimal_places=2
+        decimal_places=2,
         null=True,
         blank=True
     )
