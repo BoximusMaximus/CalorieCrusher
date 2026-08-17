@@ -2,6 +2,25 @@ from django.db import models
 # from .models import User
 
 # Create your models here.
+
+class Day (models.Model):
+    date = models.DateField(
+        auto_now=False,
+        auto_now_add=True
+    )
+    client = models.ForeignKey(
+        "client_app.Client",
+        on_delete=models.CASCADE,
+        related_name="days",
+        related_query_name="day"
+    )
+
+class Meal (models.Model):
+    name:str = models.CharField(
+        max_length=100
+    )
+
+
 class Food (models.Model):
     name:str = models.CharField(
         max_length=50
@@ -13,7 +32,7 @@ class Food (models.Model):
         "DA" : "Dairy",
         "OT" : "Other",
     }
-    type:str = models.CharField(
+    food_type:str = models.CharField(
         max_length=2,
         choices=TYPES_OF_FOOD,
         default="OT",
@@ -58,26 +77,35 @@ class Food (models.Model):
     def __str__(self):
         return self.name
 
-class Meal (models.Model):
-    name:str = models.CharField(
-        max_length=100
+class FoodItem (models.Model):
+    quantity:int = models.IntegerField(
+        default=1,
+        null=False,
+        blank=False
     )
-    food = models.ManyToManyField(
+    food = models.OneToOneField(
         Food,
+        on_delete=models.CASCADE
+    )
+    meal = models.ForeignKey(
+        Meal,
+        on_delete=models.CASCADE
     )
 
-class Day (models.Model):
-    date = models.DateField(
-        auto_now=False,
-        auto_now_add=True
+
+class MealItem (models.Model):
+    quantity:int = models.IntegerField(
+        default=1,
+        null=False,
+        blank=False
     )
-    meal = models.ManyToManyField(Meal)
-    def __str__(self):
-        return self.date
-    user = models.ForeignKey(
-        "user_app.User",
+    meal = models.OneToOneField(
+        Meal,
+        on_delete=models.CASCADE
+    )
+    day = models.ForeignKey(
+        Day,
         on_delete=models.CASCADE,
-        related_name="days",
-        related_query_name="day"
+        related_name="meals",
+        related_query_name="meal"
     )
-    
