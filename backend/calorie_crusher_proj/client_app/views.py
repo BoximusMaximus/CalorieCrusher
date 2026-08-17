@@ -20,7 +20,7 @@ class Sign_Up(APIView):
             password= new_user_data.get("password")
         )
 
-        Day.objects.create(Client=new_client_inst)
+        Day.objects.create(client=new_client_inst)
         token_inst = Token.objects.create(user=new_client_inst)
 
         return Response(
