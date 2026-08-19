@@ -10,7 +10,7 @@ from .serializers import FoodSerializer,MealSerializer,DaySerializer
 
 # Create your views here.
 class AllDays(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
     def get(self, request):
         days = Day.objects.all().order_by("id")
         serializer = DaySerializer(days, many=True)
@@ -21,7 +21,7 @@ class AllDays(APIView):
         )
 
 class AllMeals(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
     def get(self, request):
         meals = Meal.objects.all().order_by("id")
         serializer = MealSerializer(meals, many=True)
@@ -32,7 +32,6 @@ class AllMeals(APIView):
         )
 
 class AllFoods(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
     def get(self, request):
         foods = Food.objects.all().order_by("id")
         serializer = FoodSerializer(foods, many=True)
@@ -43,7 +42,7 @@ class AllFoods(APIView):
         )
 
 class FoodById(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, food_id):
         food = get_object_or_404(Food, id=food_id)
@@ -75,7 +74,7 @@ class FoodById(APIView):
         )
 
 class FoodByType(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, food_type):
         foods = Food.objects.filter(

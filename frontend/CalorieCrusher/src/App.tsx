@@ -5,7 +5,7 @@ import LinkBar from './components/LinkBar'
 function App() {
   return (
     <>
-      {/* <LinkBar/> */}
+      <LinkBar/>
       <Outlet/>
     </>
   )
