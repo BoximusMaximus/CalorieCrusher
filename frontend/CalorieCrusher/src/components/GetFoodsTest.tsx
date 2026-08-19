@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Button } from 'react-bootstrap'
 
-export default function APITesting() {
+export default function GetFoodsTest({url}:{url:string}) {
     const [foods, setFoods] = useState([])
 
-    const url = "http://localhost:8000/api/v1/"
     async function GetFoods () {
        await axios.get(`${url}items/food/`)
         .then((response) => {

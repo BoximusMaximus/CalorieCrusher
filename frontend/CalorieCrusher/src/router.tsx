@@ -4,6 +4,7 @@ import {
 import App from "./App";
 import HomePage from "./pages/HomePage";
 import APITestPage from "./pages/APITestPage";
+import LoginPage from "./pages/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -11,7 +12,8 @@ const router = createBrowserRouter([
     element: <App/>,
     children: [
         {index: true, element:<HomePage/>},
-        {path: "apitest", element:<APITestPage/>}
+        {path: "apitest", element:<APITestPage/>},
+        {path: "login", element:<LoginPage/>}
     ]
   },
 ]);

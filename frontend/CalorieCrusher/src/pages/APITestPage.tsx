@@ -1,10 +1,13 @@
 import React from 'react'
-import APITesting from '../components/APITesting'
+import GetFoodsTest from '../components/GetFoodsTest'
+import CreateFoodTest from '../components/CreateFoodTest'
 
 export default function APITestPage() {
+    const testingURL = "http://localhost:8000/api/v1/"
   return (
     <>
-        <div><APITesting/></div>
+        <GetFoodsTest url={testingURL}/>
+        <CreateFoodTest url={testingURL}/>
     </>
   )
 }
