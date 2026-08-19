@@ -1,0 +1,19 @@
+import {
+  createBrowserRouter,
+} from "react-router";
+import App from "./App";
+import HomePage from "./pages/HomePage";
+import APITestPage from "./pages/APITestPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App/>,
+    children: [
+        {index: true, element:<HomePage/>},
+        {path: "apitest", element:<APITestPage/>}
+    ]
+  },
+]);
+
+export default router
