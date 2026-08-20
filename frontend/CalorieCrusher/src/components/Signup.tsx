@@ -1,10 +1,11 @@
+import axios from 'axios';
 import React from 'react'
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
-export default function Signup() {
-
-    function HandleSubmit(e:any){
+export default function Signup({url}:{url:any}) {
+    const api = axios.create({ baseURL: "url.APIUrl"})
+    async function HandleSubmit(e:any){
         e.preventDefault();
 
         // Read the form data
@@ -15,7 +16,10 @@ export default function Signup() {
             email:formData.get("email"),
             password:formData.get("password")
         }
-        console.log(userData)
+        console.log(userData, url)
+        const response = await axios.post(`${url.APIUrl}users/signup/`, userData)
+        console.log(response.data)
+
     }
 
   return (

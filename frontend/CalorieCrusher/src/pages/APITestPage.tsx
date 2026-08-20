@@ -1,13 +1,15 @@
 import React from 'react'
 import GetFoodsTest from '../components/GetFoodsTest'
 import CreateFoodTest from '../components/CreateFoodTest'
+import { useOutletContext } from 'react-router'
+
 
 export default function APITestPage() {
-    const testingURL = "http://localhost:8000/api/v1/"
+  const APIContext:string = useOutletContext()
   return (
     <>
-        <GetFoodsTest url={testingURL}/>
-        <CreateFoodTest url={testingURL}/>
+        <GetFoodsTest url={APIContext}/>
+        <CreateFoodTest url={APIContext}/>
     </>
   )
 }

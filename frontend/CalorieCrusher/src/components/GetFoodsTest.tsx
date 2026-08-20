@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap'
 
 export default function GetFoodsTest({url}:{url:string}) {
     const [foods, setFoods] = useState([])
+    const [currentUser, setCurrentUser] = useState([])
 
     async function GetFoods () {
        await axios.get(`${url}items/food/`)

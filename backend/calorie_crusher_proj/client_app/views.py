@@ -16,7 +16,7 @@ class Sign_Up(APIView):
 
         new_client_inst = Client.objects.create_user(
             username=new_user_data.get("username"),
-            email=new_user_data.get("email"),
+            # email=new_user_data.get("email"),
             password= new_user_data.get("password")
         )
 
@@ -51,11 +51,12 @@ class Log_in(APIView):
 
         return Response(
             {
-                "client": client.email,
+                "client": client.username,
                 "token": token.key,
             },
             status=status.HTTP_200_OK,
         )
+    
 
 class Log_out(APIView):
 
@@ -67,11 +68,13 @@ class Log_out(APIView):
         )
 
 class Info(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         return Response(
             {
-                "email": request.user.username,
+                "id": request.user.id,
+                "username": request.user.username,
             },
             status=status.HTTP_200_OK,
         )

@@ -4,10 +4,12 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Signup from '../components/Signup';
 import { useState } from 'react';
+import { useOutletContext } from 'react-router';
 
 
 export default function LoginPage() {
     const [key, setKey] = useState("signin")
+    const APIContext:string = useOutletContext()
 
   return (
     <>
@@ -19,10 +21,10 @@ export default function LoginPage() {
     className="mb-3"
     fill> 
         <Tab eventKey="signin" title="Sign In" >
-            <Login/>
+            <Login url={APIContext}/>
         </Tab>
         <Tab eventKey="signup" title="Sign Up">
-            <Signup/>
+            <Signup url={APIContext}/>
         </Tab>
     </Tabs>
     
