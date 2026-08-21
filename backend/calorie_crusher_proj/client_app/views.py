@@ -16,7 +16,7 @@ class Sign_Up(APIView):
 
         new_client_inst = Client.objects.create_user(
             username=new_user_data.get("username"),
-            # email=new_user_data.get("email"),
+            email=new_user_data.get("email"),
             password= new_user_data.get("password")
         )
 

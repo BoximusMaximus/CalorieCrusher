@@ -3,15 +3,17 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from .validators import  username_format_validate
 
 class ClientManager(BaseUserManager):
-    def create_client(self, username, password=None, **extra_fields):
+    def create_user(self, email, username, password=None, **extra_fields):
+        email = self.normalize_email(email)
         user = self.model(
+            email = email,
             username = username,
             **extra_fields,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
-    def create_superuser(self, username, password=None, **extra_fields):
+    def create_superuser(self, email, username, password=None, **extra_fields):
         extra_fields["is_staff"]=True
         extra_fields["is_superuser"]=True
         return self.create_user(username=username, password=password, **extra_fields)

@@ -1,10 +1,11 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
 export default function Signup({url}:{url:any}) {
-    const api = axios.create({ baseURL: "url.APIUrl"})
+
+    const [errorMessage, setErrorMessage] = useState("")
     async function HandleSubmit(e:any){
         e.preventDefault();
 
@@ -17,9 +18,29 @@ export default function Signup({url}:{url:any}) {
             password:formData.get("password")
         }
         console.log(userData, url)
-        const response = await axios.post(`${url.APIUrl}users/signup/`, userData)
-        console.log(response.data)
+        await axios.post(`${url.APIUrl}users/signup/`, userData)
+        .then((response) => {
+            localStorage.setItem("userdata",response.data)
+            console.log("i am .then!!!")
+        }).catch((err) => {
+            setErrorMessage("account already created")
+        }).finally(() => {
+            console.log("post complete")
+        })
 
+        
+        
+
+        // if (!response)
+
+    }
+
+    function ShowErrorMessage(){
+        return <h4>{errorMessage}</h4>
+    }
+
+    function PrintLocalStorage(){
+        console.log(localStorage.getItem("userdata"))
     }
 
   return (
@@ -40,7 +61,9 @@ export default function Signup({url}:{url:any}) {
             <Button variant='primary' type="submit" >
                 Sign Up
             </Button>
+            <ShowErrorMessage/>
         </Form>
+        <Button onClick={PrintLocalStorage}>See User Data</Button>
     </>
   )
 }

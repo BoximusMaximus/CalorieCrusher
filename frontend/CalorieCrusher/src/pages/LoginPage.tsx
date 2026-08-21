@@ -10,7 +10,6 @@ import { useOutletContext } from 'react-router';
 export default function LoginPage() {
     const [key, setKey] = useState("signin")
     const APIContext:string = useOutletContext()
-
   return (
     <>
     <Tabs
