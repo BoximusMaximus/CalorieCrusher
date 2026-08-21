@@ -9,7 +9,7 @@ function App() {
   const APIUrl = "http://localhost:8000/api/v1/"
   return (
     <>
-      <LinkBar/>
+      <LinkBar url={APIUrl}/>
       <Outlet context={{APIUrl}} />
     </>
   )

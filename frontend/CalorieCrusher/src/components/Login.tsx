@@ -20,8 +20,8 @@ export default function Login({url}:{url:any}) {
         console.log(userData, url)
         await axios.post(`${url.APIUrl}users/login/`, userData)
         .then((response) => {
-            localStorage.setItem("client",response.data.client)
-            localStorage.setItem("accessToken",response.data.token)
+            window.sessionStorage.setItem("client",response.data.client)
+            window.sessionStorage.setItem("accessToken",response.data.token)
             console.log(response.data)
             console.log("i am .then!!!")
         }).catch((err) => {
@@ -44,8 +44,8 @@ export default function Login({url}:{url:any}) {
 
     function PrintLocalStorage(){
       const userData = {
-        username:localStorage.getItem("client"),
-        token:localStorage.getItem("accessToken")
+        username:window.sessionStorage.getItem("client"),
+        token:window.sessionStorage.getItem("accessToken")
       }
       console.log(JSON.stringify(userData))
     }
@@ -66,7 +66,7 @@ export default function Login({url}:{url:any}) {
             </Button>
             <ShowErrorMessage/>
         </Form>
-        <Button onClick={PrintLocalStorage}>See User Data</Button>
+        <Button onClick={PrintLocalStorage}>See User Data (DEVELOPER)</Button>
     </>
   )
 }

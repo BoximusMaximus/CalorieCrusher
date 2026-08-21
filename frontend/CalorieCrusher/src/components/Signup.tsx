@@ -12,6 +12,10 @@ export default function Signup({url}:{url:any}) {
         // Read the form data
         const form = e.target;
         const formData = new FormData(form);
+        if (formData.get("password") !== formData.get("passwordrepeat")){
+            setErrorMessage("passwords do not match")
+            return null
+        }
         const userData = {
             username:formData.get("username"),
             email:formData.get("email"),
@@ -20,7 +24,8 @@ export default function Signup({url}:{url:any}) {
         console.log(userData, url)
         await axios.post(`${url.APIUrl}users/signup/`, userData)
         .then((response) => {
-            localStorage.setItem("userdata",response.data)
+            window.sessionStorage.setItem("client",response.data.client)
+            window.sessionStorage.setItem("accessToken",response.data.token)
             console.log("i am .then!!!")
         }).catch((err) => {
             setErrorMessage("account already created")
@@ -40,7 +45,11 @@ export default function Signup({url}:{url:any}) {
     }
 
     function PrintLocalStorage(){
-        console.log(localStorage.getItem("userdata"))
+        const userData = {
+        username:window.sessionStorage.getItem("client"),
+        token:window.sessionStorage.getItem("accessToken")
+      }
+      console.log(JSON.stringify(userData))
     }
 
   return (
@@ -58,12 +67,16 @@ export default function Signup({url}:{url:any}) {
                 <Form.Label>Password : </Form.Label>
                 <Form.Control name="password" type='password' placeholder='Passsword'/>
             </Form.Group>
+            <Form.Group>
+                <Form.Label>Repeat Password : </Form.Label>
+                <Form.Control name="passwordrepeat" type='password' placeholder='Passsword'/>
+            </Form.Group>
             <Button variant='primary' type="submit" >
                 Sign Up
             </Button>
             <ShowErrorMessage/>
         </Form>
-        <Button onClick={PrintLocalStorage}>See User Data</Button>
+        <Button onClick={PrintLocalStorage}>See User Data (DEVELOPER)</Button>
     </>
   )
 }

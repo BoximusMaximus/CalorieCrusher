@@ -2,12 +2,16 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Button } from 'react-bootstrap'
 
-export default function GetFoodsTest({url}:{url:string}) {
+export default function GetFoodsTest({url}:{url:any}) {
     const [foods, setFoods] = useState([])
-    const [currentUser, setCurrentUser] = useState([])
+    // const [currentUser, setCurrentUser] = useState([])
 
     async function GetFoods () {
-       await axios.get(`${url}items/food/`)
+       await axios.get(`${url.APIUrl}items/food/`, {
+        auth: {
+            token:window.sessionStorage.setItem("accessToken",response.data.token)
+        }
+       })
         .then((response) => {
             console.log(response.data)
             setFoods(response.data.map((food:any) => food.name))

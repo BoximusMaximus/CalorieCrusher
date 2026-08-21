@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 from .models import Food,Meal,Day
 from .serializers import FoodSerializer,MealSerializer,DaySerializer
@@ -32,6 +32,7 @@ class AllMeals(APIView):
         )
 
 class AllFoods(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         foods = Food.objects.all().order_by("id")
         serializer = FoodSerializer(foods, many=True)
@@ -74,7 +75,7 @@ class FoodById(APIView):
         )
 
 class FoodByType(APIView):
-    # permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request, food_type):
         foods = Food.objects.filter(
@@ -87,3 +88,5 @@ class FoodByType(APIView):
             serializer.data,
             status=status.HTTP_200_OK,
         )
+class CreateFood():
+    pass

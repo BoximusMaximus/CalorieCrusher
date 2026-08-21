@@ -1,8 +1,25 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { Container, Nav, NavDropdown } from 'react-bootstrap'
 import Navbar from "react-bootstrap/Navbar"
 
-export default function LinkBar() {
+export default function LinkBar({url}:{url:any}) {
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    if (window.sessionStorage.getItem("token") == undefined){
+      setLoggedIn(false)
+      console.log("user is logged in")
+    } else {
+      setLoggedIn(true)
+      console.log("user is logged in")
+    }
+  },[])
+
+  async function Logout(){
+    axios.post(url, )
+  }
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary" variant='dark' data-bs-theme="dark" >
       <Container color="black">
