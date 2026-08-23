@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Button } from 'react-bootstrap'
+import api from '../axiosinterceptors'
 
 export default function GetFoodsTest({url}:{url:any}) {
     const [foods, setFoods] = useState([])
     // const [currentUser, setCurrentUser] = useState([])
 
     async function GetFoods () {
-       await axios.get(`${url.APIUrl}items/food/`, {
+       await api.get(`${url.APIUrl}items/food/`, {
        })
         .then((response) => {
             console.log(response.data)
