@@ -4,21 +4,21 @@ import { Container, Nav, NavDropdown } from 'react-bootstrap'
 import Navbar from "react-bootstrap/Navbar"
 
 export default function LinkBar({url}:{url:any}) {
-  const [loggedIn, setLoggedIn] = useState(false)
+  // const [loggedIn, setLoggedIn] = useState(false)
 
-  useEffect(() => {
-    if (window.sessionStorage.getItem("token") == undefined){
-      setLoggedIn(false)
-      console.log("user is logged in")
-    } else {
-      setLoggedIn(true)
-      console.log("user is logged in")
-    }
-  },[])
+  // useEffect(() => {
+  //   if (window.sessionStorage.getItem("token") == undefined){
+  //     setLoggedIn(false)
+  //     console.log("user is logged in")
+  //   } else {
+  //     setLoggedIn(true)
+  //     console.log("user is logged in")
+  //   }
+  // },[])
 
-  async function Logout(){
-    axios.post(url, )
-  }
+  // async function Logout(){
+  //   axios.post(url, )
+  // }
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary" variant='dark' data-bs-theme="dark" >

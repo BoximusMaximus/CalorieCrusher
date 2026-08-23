@@ -6,7 +6,7 @@ import { createElement } from 'react'
 
 
 function App() {
-  const APIUrl = "http://localhost:8000/api/v1/"
+  const APIUrl = "http://projects-test:8000/api/v1/"
   return (
     <>
       <LinkBar url={APIUrl}/>

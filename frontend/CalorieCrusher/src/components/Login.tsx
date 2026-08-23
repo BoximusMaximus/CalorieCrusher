@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import api from "../axiosinterceptors"
 
 export default function Login({url}:{url:any}) {
 
@@ -18,13 +19,13 @@ export default function Login({url}:{url:any}) {
             password:formData.get("password")
         }
         console.log(userData, url)
-        await axios.post(`${url.APIUrl}users/login/`, userData)
-        .then((response) => {
+        await api.post(`${url.APIUrl}users/login/`, userData)
+        .then((response:any) => {
             window.sessionStorage.setItem("client",response.data.client)
-            window.sessionStorage.setItem("accessToken",response.data.token)
+            window.sessionStorage.setItem("access_token",response.data.token)
             console.log(response.data)
             console.log("i am .then!!!")
-        }).catch((err) => {
+        }).catch((err:any) => {
             setErrorMessage("account not found")
             console.log(err)
         }).finally(() => {
@@ -45,7 +46,7 @@ export default function Login({url}:{url:any}) {
     function PrintLocalStorage(){
       const userData = {
         username:window.sessionStorage.getItem("client"),
-        token:window.sessionStorage.getItem("accessToken")
+        token:window.sessionStorage.getItem("access_token")
       }
       console.log(JSON.stringify(userData))
     }

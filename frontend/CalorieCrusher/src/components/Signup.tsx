@@ -25,7 +25,7 @@ export default function Signup({url}:{url:any}) {
         await axios.post(`${url.APIUrl}users/signup/`, userData)
         .then((response) => {
             window.sessionStorage.setItem("client",response.data.client)
-            window.sessionStorage.setItem("accessToken",response.data.token)
+            window.sessionStorage.setItem("access_token",response.data.token)
             console.log("i am .then!!!")
         }).catch((err) => {
             setErrorMessage("account already created")
@@ -47,7 +47,7 @@ export default function Signup({url}:{url:any}) {
     function PrintLocalStorage(){
         const userData = {
         username:window.sessionStorage.getItem("client"),
-        token:window.sessionStorage.getItem("accessToken")
+        token:window.sessionStorage.getItem("access_token")
       }
       console.log(JSON.stringify(userData))
     }

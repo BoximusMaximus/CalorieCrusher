@@ -8,9 +8,6 @@ export default function GetFoodsTest({url}:{url:any}) {
 
     async function GetFoods () {
        await axios.get(`${url.APIUrl}items/food/`, {
-        auth: {
-            token:window.sessionStorage.setItem("accessToken",response.data.token)
-        }
        })
         .then((response) => {
             console.log(response.data)
