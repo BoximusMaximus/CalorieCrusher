@@ -8,8 +8,7 @@ export default function GetFoodsTest({url}:{url:any}) {
     // const [currentUser, setCurrentUser] = useState([])
 
     async function GetFoods () {
-       await api.get(`${url.APIUrl}items/food/`, {
-       })
+       await api.get(`${url.APIUrl}items/food/`)
         .then((response) => {
             console.log(response.data)
             setFoods(response.data.map((food:any) => food.name))

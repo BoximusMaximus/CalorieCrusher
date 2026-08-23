@@ -3,6 +3,7 @@ from .views import *
 
 urlpatterns = [
     path("food/", AllFoods.as_view(), name="all_foods"),
+    path("food/create/", CreateFood.as_view(), name="create_food"),
     path("food/type/<str:food_type>/",
         FoodByType.as_view(),
         name="foods_by_type",

@@ -24,7 +24,6 @@ export default function Signup({url}:{url:any}) {
         console.log(userData, url)
         await axios.post(`${url.APIUrl}users/signup/`, userData)
         .then((response) => {
-            window.sessionStorage.setItem("client",response.data.client)
             window.sessionStorage.setItem("access_token",response.data.token)
             console.log("i am .then!!!")
         }).catch((err) => {

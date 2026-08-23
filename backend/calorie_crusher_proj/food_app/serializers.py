@@ -7,6 +7,7 @@ class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
         fields = "__all__"
+        read_only_fields = ["owner"]
 
 class MealSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +18,4 @@ class DaySerializer(serializers.ModelSerializer):
     class Meta:
         model = Day
         fields = "__all__"
+        read_only_fields = ["owner"]

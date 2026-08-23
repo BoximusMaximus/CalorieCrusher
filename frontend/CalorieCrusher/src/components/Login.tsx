@@ -20,17 +20,16 @@ export default function Login({url}:{url:any}) {
         }
         console.log(userData, url)
         await api.post(`${url.APIUrl}users/login/`, userData)
-        .then((response:any) => {
-            window.sessionStorage.setItem("client",response.data.client)
-            window.sessionStorage.setItem("access_token",response.data.token)
-            console.log(response.data)
-            console.log("i am .then!!!")
-        }).catch((err:any) => {
-            setErrorMessage("account not found")
-            console.log(err)
-        }).finally(() => {
-            console.log("post complete")
-        })
+            .then((response:any) => {
+                window.sessionStorage.setItem("access_token",response.data.token)
+                console.log(response.data)
+                console.log("i am .then!!!")
+            }).catch((err:any) => {
+                setErrorMessage("account not found")
+                console.log(err)
+            }).finally(() => {
+                console.log("post complete")
+            })
 
         
         
@@ -43,12 +42,15 @@ export default function Login({url}:{url:any}) {
         return <h4>{errorMessage}</h4>
     }
 
-    function PrintLocalStorage(){
-      const userData = {
-        username:window.sessionStorage.getItem("client"),
-        token:window.sessionStorage.getItem("access_token")
-      }
-      console.log(JSON.stringify(userData))
+    async function PrintLocalStorage(){
+        await api.get(`${url.APIUrl}users/me/`)
+        .then((response) => {
+            console.log(response.data)
+        }) .catch((err) => {
+            console.log(err)
+        }) .finally(() => {
+            console.log("finished detching user data")
+        })
     }
 
   return (
