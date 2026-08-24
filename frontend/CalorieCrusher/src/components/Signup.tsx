@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import api from '../axiosinterceptors';
 
-export default function Signup({url}:{url:any}) {
+export default function Signup({ccURL}:{ccURL:string}) {
 
     const [errorMessage, setErrorMessage] = useState("")
     async function HandleSubmit(e:any){
@@ -21,8 +22,8 @@ export default function Signup({url}:{url:any}) {
             email:formData.get("email"),
             password:formData.get("password")
         }
-        console.log(userData, url)
-        await axios.post(`${url.APIUrl}users/signup/`, userData)
+        console.log(userData, ccURL)
+        await api.post("users/signup/", userData)
         .then((response) => {
             window.sessionStorage.setItem("access_token",response.data.token)
             console.log("i am .then!!!")
@@ -32,23 +33,22 @@ export default function Signup({url}:{url:any}) {
             console.log("post complete")
         })
 
-        
-        
-
-        // if (!response)
-
+    
     }
 
     function ShowErrorMessage(){
         return <h4>{errorMessage}</h4>
     }
 
-    function PrintLocalStorage(){
-        const userData = {
-        username:window.sessionStorage.getItem("client"),
-        token:window.sessionStorage.getItem("access_token")
-      }
-      console.log(JSON.stringify(userData))
+    async function PrintUser(){
+        await api.get("/users/me/")
+        .then((response) => {
+            console.log(response.data)
+        }) .catch((err) => {
+            console.log(err)
+        }) .finally(() => {
+            console.log("finished fetching user data")
+        })
     }
 
   return (
@@ -75,7 +75,7 @@ export default function Signup({url}:{url:any}) {
             </Button>
             <ShowErrorMessage/>
         </Form>
-        <Button onClick={PrintLocalStorage}>See User Data (DEVELOPER)</Button>
+        <Button onClick={PrintUser}>See User Data (DEVELOPER)</Button>
     </>
   )
 }

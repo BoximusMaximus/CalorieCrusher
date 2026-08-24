@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = axios.create({ baseURL: "http://projects-test:8000" });
+const api = axios.create({ baseURL: "http://projects-test:8000/api/v1/" });
 
 api.interceptors.request.use((config) => {
   const token = window.sessionStorage.getItem("access_token");

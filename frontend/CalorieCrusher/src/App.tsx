@@ -4,13 +4,12 @@ import LinkBar from './components/LinkBar'
 import "bootstrap/dist/css/bootstrap.min.css"
 import { createElement } from 'react'
 
-
 function App() {
-  const APIUrl = "http://projects-test:8000/api/v1/"
+  const calorieCrusherAPIUrl = "http://projects-test:8000/api/v1/"
   return (
     <>
-      <LinkBar url={APIUrl}/>
-      <Outlet context={{APIUrl}} />
+      <LinkBar />
+      <Outlet  />
     </>
   )
 }

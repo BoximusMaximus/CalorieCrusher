@@ -7,9 +7,8 @@ import { useState } from 'react';
 import { useOutletContext } from 'react-router';
 
 
-export default function LoginPage() {
+export default function LoginPage({ccURL}:{ccURL:string}) {
     const [key, setKey] = useState("signin")
-    const APIContext:any = useOutletContext()
   return (
     <>
     <Tabs
@@ -20,10 +19,10 @@ export default function LoginPage() {
     className="mb-3"
     fill> 
         <Tab eventKey="signin" title="Sign In" >
-            <Login url={APIContext}/>
+            <Login ccURL={ccURL}/>
         </Tab>
         <Tab eventKey="signup" title="Sign Up">
-            <Signup url={APIContext}/>
+            <Signup ccURL={ccURL}/>
         </Tab>
     </Tabs>
     

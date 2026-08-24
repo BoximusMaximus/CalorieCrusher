@@ -5,8 +5,11 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate
+from django.shortcuts import get_object_or_404
+
 
 from .models import Client
+from .serializers import ClientSerializer
 from food_app.models import Day
 
 # Create your views here.
@@ -71,10 +74,9 @@ class Info(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        client = get_object_or_404(Client, id=request.user.id, username=request.user.username)
+        serializer = ClientSerializer(client)
         return Response(
-            {
-                "id": request.user.id,
-                "username": request.user.username,
-            },
+            serializer.data,
             status=status.HTTP_200_OK,
         )

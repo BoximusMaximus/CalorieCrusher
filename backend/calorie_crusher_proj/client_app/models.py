@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.core.validators import MaxValueValidator, MinValueValidator
 from .validators import  username_format_validate
 
 class ClientManager(BaseUserManager):
@@ -35,6 +36,24 @@ class Client (AbstractUser):
         blank=False,
         default=None,
     )
+    weight:int = models.IntegerField(
+        validators=[MinValueValidator(100), MaxValueValidator(999)],
+        null=True,
+        blank=True,
+        default=None,
+    ) 
+    target_weight:int = models.IntegerField(
+        validators=[MinValueValidator(100), MaxValueValidator(999)],
+        null=True,
+        blank=True,
+        default=None,
+    )
+    height:int = models.IntegerField(
+        validators=[MinValueValidator(48), MaxValueValidator(90)],
+        null=True,
+        blank=True,
+        default=None,
+    ) 
 
     USERNAME_FIELD="username"
     REQUIRED_FIELDS=[]

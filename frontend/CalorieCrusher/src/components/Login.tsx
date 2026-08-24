@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import api from "../axiosinterceptors"
 
-export default function Login({url}:{url:any}) {
+export default function Login({ccURL}:{ccURL:string}) {
 
     const [errorMessage, setErrorMessage] = useState("")
     async function HandleSubmit(e:any){
@@ -18,8 +18,8 @@ export default function Login({url}:{url:any}) {
             email:formData.get("email"),
             password:formData.get("password")
         }
-        console.log(userData, url)
-        await api.post(`${url.APIUrl}users/login/`, userData)
+        console.log(userData, ccURL)
+        await api.post("users/login/", userData)
             .then((response:any) => {
                 window.sessionStorage.setItem("access_token",response.data.token)
                 console.log(response.data)
@@ -31,10 +31,6 @@ export default function Login({url}:{url:any}) {
                 console.log("post complete")
             })
 
-        
-        
-
-        // if (!response)
 
     }
 
@@ -42,14 +38,14 @@ export default function Login({url}:{url:any}) {
         return <h4>{errorMessage}</h4>
     }
 
-    async function PrintLocalStorage(){
-        await api.get(`${url.APIUrl}users/me/`)
+    async function PrintUser(){
+        await api.get("/users/me/")
         .then((response) => {
             console.log(response.data)
         }) .catch((err) => {
             console.log(err)
         }) .finally(() => {
-            console.log("finished detching user data")
+            console.log("finished fetching user data")
         })
     }
 
@@ -69,7 +65,7 @@ export default function Login({url}:{url:any}) {
             </Button>
             <ShowErrorMessage/>
         </Form>
-        <Button onClick={PrintLocalStorage}>See User Data (DEVELOPER)</Button>
+        <Button onClick={PrintUser}>See User Data (DEVELOPER)</Button>
     </>
   )
 }

@@ -1,24 +1,48 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Container, Nav, NavDropdown } from 'react-bootstrap'
+import { Button, Container, Nav, NavDropdown } from 'react-bootstrap'
 import Navbar from "react-bootstrap/Navbar"
+import api from '../axiosinterceptors'
+import { GetUserInfo } from '../utils'
 
-export default function LinkBar({url}:{url:any}) {
-  // const [loggedIn, setLoggedIn] = useState(false)
+export default function LinkBar() {
+  const [loggedIn, setLoggedIn] = useState(false)
 
-  // useEffect(() => {
-  //   if (window.sessionStorage.getItem("token") == undefined){
-  //     setLoggedIn(false)
-  //     console.log("user is logged in")
-  //   } else {
-  //     setLoggedIn(true)
-  //     console.log("user is logged in")
-  //   }
-  // },[])
+  async function CheckForUser(){
+    const userInfo = await GetUserInfo()
+    if (userInfo){
+      setLoggedIn(true)
+    } else {
+      setLoggedIn(false)
+    }
+  }
 
-  // async function Logout(){
-  //   axios.post(url, )
-  // }
+  async function Logout(){
+    api.post("users/logout/")
+    .finally(() => {
+      setLoggedIn(false)
+      window.sessionStorage.setItem("access_token","")
+      console.log("User was logged out")
+    })
+    
+  }
+
+  function DynamicSignIn(){
+    if (loggedIn){
+      return <Button  variant="outline-danger" onClick={Logout}>Logout</Button>
+    } else {
+      return <Nav.Link href="login">Login</Nav.Link>
+    }
+  }
+
+  useEffect(() => {
+    console.log("Checking if user logged in")
+    CheckForUser()
+  },[])
+
+
+
+  
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary" variant='dark' data-bs-theme="dark" >
@@ -29,7 +53,7 @@ export default function LinkBar({url}:{url:any}) {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="apitest">Test</Nav.Link>
-            <Nav.Link href="login">Login</Nav.Link>
+            <DynamicSignIn/>
           </Nav>
         </Navbar.Collapse>
       </Container>
