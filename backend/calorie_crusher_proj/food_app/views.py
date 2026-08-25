@@ -124,8 +124,8 @@ class FoodByType(APIView):
         )
 class CreateFood(APIView):
     permission_classes = [IsAuthenticated]
-    def post(self, request):
-        new_food = FoodSerializer(data=request.data)
+    def post(self, request, food_id):
+        new_food = ExternalFood(food_id=food_id)
         if new_food.is_valid():
             new_food.save(owner=request.user)
             return Response(

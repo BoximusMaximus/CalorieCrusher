@@ -55,7 +55,10 @@ class Client (AbstractUser):
         default=None,
     )
     fat_secret_token = models.CharField(
-        max_length=255,
+        null=True,
+        blank=True
+    ) 
+    fat_secret_token_expiration = models.DateTimeField(
         null=True,
         blank=True
     ) 

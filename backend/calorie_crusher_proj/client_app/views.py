@@ -1,6 +1,9 @@
 import os
 import requests
 
+from datetime import timedelta
+from django.utils import timezone
+
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -83,18 +86,28 @@ class Info(APIView):
             serializer.data,
             status=status.HTTP_200_OK,
         )
-class GenerateFatSecretToken(APIView):
+class Generate_FatSecret_Token(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        client = get_object_or_404(Client, id=request.user.id, username=request.user.username)
+
         client_id = os.environ.get("FATSECRET_CLIENT_SECRET_API_ID")
         client_secret = os.environ.get("FATSECRET_CLIENT_SECRET_API_KEY")
-
         if not client_id or not client_secret:
             return Response(
                 {"error": "FatSecret credentials are not configured"},
                 status=500,
             )
+        # if token not expired and exists, return the already existing token
+        if client.fat_secret_token_expiration and client.fat_secret_token and client.fat_secret_token_expiration > timezone.now():
+            return Response({
+                        "connected": True,
+                        "expires": client.fat_secret_token_expiration,
+                        "token_type": "Bearer",
+                        "already_exists":True
+                    })
+        
 
         response = requests.post(
             "https://oauth.fatsecret.com/connect/token",
@@ -116,10 +129,20 @@ class GenerateFatSecretToken(APIView):
             )
 
         token_data = response.json()
-
-        # YOU CANNOT EXPOSE TOKEN TO USER
+        
+        client.fat_secret_token = token_data.get("access_token")
+        fat_secret_expire_time = timezone.now() + timedelta(seconds=86400)
+        client.fat_secret_token_expiration = fat_secret_expire_time
+        client.save(
+                    update_fields=[
+                        "fat_secret_token",
+                        "fat_secret_token_expiration"
+                    ]
+                )
+        # IF YOU EXPOSE THE TOKEN TO THE USER THEN YOUR FATHER WILL HATE YOU AND YOULL DIE ALONE
         return Response({
             "connected": True,
-            "expires_in": token_data.get("expires_in"),
+            "expires": fat_secret_expire_time,
             "token_type": token_data.get("token_type"),
+            "already_exists":False
         })
