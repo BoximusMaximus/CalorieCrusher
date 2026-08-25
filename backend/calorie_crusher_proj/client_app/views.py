@@ -1,3 +1,6 @@
+import os
+import requests
+
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -80,3 +83,43 @@ class Info(APIView):
             serializer.data,
             status=status.HTTP_200_OK,
         )
+class GenerateFatSecretToken(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        client_id = os.environ.get("FATSECRET_CLIENT_SECRET_API_ID")
+        client_secret = os.environ.get("FATSECRET_CLIENT_SECRET_API_KEY")
+
+        if not client_id or not client_secret:
+            return Response(
+                {"error": "FatSecret credentials are not configured"},
+                status=500,
+            )
+
+        response = requests.post(
+            "https://oauth.fatsecret.com/connect/token",
+            auth=(client_id, client_secret),
+            data={
+                "grant_type": "client_credentials",
+                "scope": "basic",
+            },
+            timeout=10,
+        )
+
+        if not response.status_code == 200:
+            return Response(
+                {
+                    "error": "FatSecret authentication failed",
+                    "details": response.text,
+                },
+                status=response.status_code,
+            )
+
+        token_data = response.json()
+
+        # YOU CANNOT EXPOSE TOKEN TO USER
+        return Response({
+            "connected": True,
+            "expires_in": token_data.get("expires_in"),
+            "token_type": token_data.get("token_type"),
+        })

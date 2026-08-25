@@ -3,9 +3,10 @@ import React, { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import api from '../axiosinterceptors';
+import { useNavigate } from 'react-router';
 
 export default function Signup({ccURL}:{ccURL:string}) {
-
+    let navigate = useNavigate()
     const [errorMessage, setErrorMessage] = useState("")
     async function HandleSubmit(e:any){
         e.preventDefault();
@@ -27,13 +28,12 @@ export default function Signup({ccURL}:{ccURL:string}) {
         .then((response) => {
             window.sessionStorage.setItem("access_token",response.data.token)
             console.log("i am .then!!!")
+            navigate("/")
         }).catch((err) => {
             setErrorMessage("account already created")
         }).finally(() => {
             console.log("post complete")
         })
-
-    
     }
 
     function ShowErrorMessage(){

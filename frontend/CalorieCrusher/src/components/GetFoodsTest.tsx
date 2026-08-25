@@ -3,12 +3,12 @@ import axios from 'axios'
 import { Button } from 'react-bootstrap'
 import api from '../axiosinterceptors'
 
-export default function GetFoodsTest({url}:{url:any}) {
+export default function GetFoodsTest() {
     const [foods, setFoods] = useState([])
     // const [currentUser, setCurrentUser] = useState([])
 
     async function GetFoods () {
-       await api.get(`${url.APIUrl}items/food/`)
+       await api.get("items/food/")
         .then((response) => {
             console.log(response.data)
             setFoods(response.data.map((food:any) => food.name))
@@ -21,6 +21,10 @@ export default function GetFoodsTest({url}:{url:any}) {
             console.log("Request complete")
         })
     }
+
+    // async function DeleteFood(food_id){
+    //     pass
+    // }
 
     function ListFoods(){
         let key = 0

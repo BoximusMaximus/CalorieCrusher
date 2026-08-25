@@ -3,8 +3,10 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import api from "../axiosinterceptors"
+import { useNavigate } from 'react-router';
 
 export default function Login({ccURL}:{ccURL:string}) {
+    let navigate = useNavigate()
 
     const [errorMessage, setErrorMessage] = useState("")
     async function HandleSubmit(e:any){
@@ -24,14 +26,13 @@ export default function Login({ccURL}:{ccURL:string}) {
                 window.sessionStorage.setItem("access_token",response.data.token)
                 console.log(response.data)
                 console.log("i am .then!!!")
+                navigate("/")
             }).catch((err:any) => {
                 setErrorMessage("account not found")
                 console.log(err)
             }).finally(() => {
                 console.log("post complete")
             })
-
-
     }
 
     function ShowErrorMessage(){

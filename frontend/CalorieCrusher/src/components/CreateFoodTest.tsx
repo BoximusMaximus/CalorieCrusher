@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, FormLabel } from 'react-bootstrap'
 import api from '../axiosinterceptors';
 
-export default function CreateFoodTest({url}:{url:any}) {
+export default function CreateFoodTest() {
 
     async function handleSubmit(e:any){
         e.preventDefault();
@@ -21,7 +21,7 @@ export default function CreateFoodTest({url}:{url:any}) {
             protein:formData.get("protein"),
         }
         console.log(query);
-        await api.post(`${url.APIUrl}items/food/create/`, query)
+        await api.post("items/food/create/", query)
         .then((response) => {
             console.log(response.data)
         }) .catch((err) => {

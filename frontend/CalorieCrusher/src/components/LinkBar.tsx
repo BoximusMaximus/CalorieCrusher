@@ -4,8 +4,11 @@ import { Button, Container, Nav, NavDropdown } from 'react-bootstrap'
 import Navbar from "react-bootstrap/Navbar"
 import api from '../axiosinterceptors'
 import { GetUserInfo } from '../utils'
+import { useNavigate } from 'react-router'
 
 export default function LinkBar() {
+  let navigate = useNavigate()
+
   const [loggedIn, setLoggedIn] = useState(false)
 
   async function CheckForUser(){
@@ -23,6 +26,7 @@ export default function LinkBar() {
       setLoggedIn(false)
       window.sessionStorage.setItem("access_token","")
       console.log("User was logged out")
+      navigate("/")
     })
     
   }
@@ -38,7 +42,7 @@ export default function LinkBar() {
   useEffect(() => {
     console.log("Checking if user logged in")
     CheckForUser()
-  },[])
+  })
 
 
 

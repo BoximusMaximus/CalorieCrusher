@@ -53,6 +53,11 @@ class Client (AbstractUser):
         null=True,
         blank=True,
         default=None,
+    )
+    fat_secret_token = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
     ) 
 
     USERNAME_FIELD="username"
