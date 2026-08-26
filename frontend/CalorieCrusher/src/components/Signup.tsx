@@ -1,11 +1,10 @@
-import axios from 'axios';
 import React, { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import api from '../axiosinterceptors';
 import { useNavigate } from 'react-router';
 
-export default function Signup({ccURL}:{ccURL:string}) {
+export default function Signup() {
     let navigate = useNavigate()
     const [errorMessage, setErrorMessage] = useState("")
     async function HandleSubmit(e:any){
@@ -23,12 +22,12 @@ export default function Signup({ccURL}:{ccURL:string}) {
             email:formData.get("email"),
             password:formData.get("password")
         }
-        console.log(userData, ccURL)
+        console.log(userData)
         await api.post("users/signup/", userData)
         .then((response) => {
             window.sessionStorage.setItem("access_token",response.data.token)
             console.log("i am .then!!!")
-            navigate("/")
+            navigate(`/profile/${userData.username}`)
         }).catch((err) => {
             setErrorMessage("account already created")
         }).finally(() => {

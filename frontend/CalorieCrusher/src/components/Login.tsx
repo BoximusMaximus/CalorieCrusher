@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import api from "../axiosinterceptors"
 import { useNavigate } from 'react-router';
 
-export default function Login({ccURL}:{ccURL:string}) {
+export default function Login() {
     let navigate = useNavigate()
 
     const [errorMessage, setErrorMessage] = useState("")
@@ -20,13 +19,13 @@ export default function Login({ccURL}:{ccURL:string}) {
             email:formData.get("email"),
             password:formData.get("password")
         }
-        console.log(userData, ccURL)
+        console.log(userData)
         await api.post("users/login/", userData)
             .then((response:any) => {
                 window.sessionStorage.setItem("access_token",response.data.token)
                 console.log(response.data)
                 console.log("i am .then!!!")
-                navigate("/")
+                navigate(`/profile/${userData.username}`)
             }).catch((err:any) => {
                 setErrorMessage("account not found")
                 console.log(err)

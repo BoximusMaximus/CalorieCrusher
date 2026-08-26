@@ -4,10 +4,9 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Signup from '../components/Signup';
 import { useState } from 'react';
-import { useOutletContext } from 'react-router';
 
 
-export default function LoginPage({ccURL}:{ccURL:string}) {
+export default function LoginPage() {
     const [key, setKey] = useState("signin")
   return (
     <>
@@ -19,10 +18,10 @@ export default function LoginPage({ccURL}:{ccURL:string}) {
     className="mb-3"
     fill> 
         <Tab eventKey="signin" title="Sign In" >
-            <Login ccURL={ccURL}/>
+            <Login />
         </Tab>
         <Tab eventKey="signup" title="Sign Up">
-            <Signup ccURL={ccURL}/>
+            <Signup />
         </Tab>
     </Tabs>
     

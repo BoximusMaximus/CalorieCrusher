@@ -10,10 +10,12 @@ export default function LinkBar() {
   let navigate = useNavigate()
 
   const [loggedIn, setLoggedIn] = useState(false)
+  const [username, setUsername] = useState("")
 
   async function CheckForUser(){
     const userInfo = await GetUserInfo()
     if (userInfo){
+      setUsername(userInfo.username)
       setLoggedIn(true)
     } else {
       setLoggedIn(false)
@@ -33,7 +35,12 @@ export default function LinkBar() {
 
   function DynamicSignIn(){
     if (loggedIn){
-      return <Button  variant="outline-danger" onClick={Logout}>Logout</Button>
+      return (
+        <>
+          <Nav.Link href={`/profile/${username}`}>MyProfile</Nav.Link>
+          <Button variant="outline-danger" onClick={Logout}>Logout</Button>
+        </>
+      )
     } else {
       return <Nav.Link href="login">Login</Nav.Link>
     }
@@ -42,7 +49,7 @@ export default function LinkBar() {
   useEffect(() => {
     console.log("Checking if user logged in")
     CheckForUser()
-  })
+  },)
 
 
 
