@@ -33,16 +33,22 @@ export default function LinkBar() {
     
   }
 
-  function DynamicSignIn(){
+  function DynamicLinks(){
     if (loggedIn){
       return (
         <>
+          <Nav.Link href={`/mealtracker/${username}`}>MealTracker</Nav.Link>
           <Nav.Link href={`/profile/${username}`}>MyProfile</Nav.Link>
           <Button variant="outline-danger" onClick={Logout}>Logout</Button>
         </>
       )
     } else {
-      return <Nav.Link href="login">Login</Nav.Link>
+      return (
+      <>
+        <Nav.Link href={`/mealtrackerdemo/`}>MealTracker</Nav.Link>
+        <Nav.Link href="/login">Login</Nav.Link>
+      </>
+      )
     }
   }
 
@@ -63,8 +69,9 @@ export default function LinkBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="apitest">Test</Nav.Link>
-            <DynamicSignIn/>
+            
+            <Nav.Link href="/apitest">Test</Nav.Link>
+            <DynamicLinks/>
           </Nav>
         </Navbar.Collapse>
       </Container>

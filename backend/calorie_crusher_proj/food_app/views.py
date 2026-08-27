@@ -80,7 +80,7 @@ class FoodById(APIView):
     def delete(self, request, food_id):
         food = get_object_or_404(
             Food,
-            food_id=food_id,
+            id=food_id,
             owner=request.user
         )
 
@@ -132,8 +132,8 @@ class FoodByType(APIView):
         )
 class CreateFood(APIView):
     permission_classes = [IsAuthenticated]
-    def post(self, request, food_id):
-        new_food = FoodSerializer(food_id=food_id)
+    def post(self, request):
+        new_food = FoodSerializer(data=request.data)
         if new_food.is_valid():
             new_food.save(owner=request.user)
             return Response(
@@ -143,16 +143,16 @@ class CreateFood(APIView):
         else:
             return Response(new_food.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CreateExternalFood(APIView):
-    permission_classes = [IsAuthenticated]
-    def post(self, request):
-        new_food = ExternalFoodSerializer(data=request.data)
-        if new_food.is_valid():
-            new_food.save(owner=request.user)
-            return Response(
-                new_food.data,
-                status=status.HTTP_201_CREATED,
-        )
-        else:
-            return Response(new_food.errors, status=status.HTTP_400_BAD_REQUEST)
+# class CreateExternalFood(APIView):
+#     permission_classes = [IsAuthenticated]
+#     def post(self, request, food_id):
+#         new_food = ExternalFoodSerializer(data=request.data)
+#         if new_food.is_valid():
+#             new_food.save(owner=request.user)
+#             return Response(
+#                 new_food.data,
+#                 status=status.HTTP_201_CREATED,
+#         )
+#         else:
+#             return Response(new_food.errors, status=status.HTTP_400_BAD_REQUEST)
         

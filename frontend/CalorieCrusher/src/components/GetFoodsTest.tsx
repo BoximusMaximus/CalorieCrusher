@@ -22,10 +22,6 @@ export default function GetFoodsTest() {
         })
     }
 
-    // async function DeleteFood(food_id){
-    //     pass
-    // }
-
     function ListFoods(){
         let key = 0
         const listItems = foods.map(food => <li key={key++}>{food}</li>)

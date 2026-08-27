@@ -7,7 +7,7 @@ class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
         fields = "__all__"
-        read_only_fields = ["owner"]
+        read_only_fields = ["owner", "id"]
 
 class ExternalFoodSerializer(serializers.ModelSerializer):
     class Meta:
