@@ -3,12 +3,13 @@ from django.db import models
 
 # Create your models here.
 
+
 class Day (models.Model):
     date = models.DateField(
         auto_now=False,
         auto_now_add=True
     )
-    client = models.ForeignKey(
+    owner = models.ForeignKey(
         "client_app.Client",
         on_delete=models.CASCADE,
         related_name="days",
@@ -21,7 +22,25 @@ class Meal (models.Model):
     )
 
 
+class ExternalFood (models.Model):
+    owner = models.ForeignKey(
+            "client_app.Client",
+            on_delete=models.CASCADE,
+            related_name="external_foods",
+            related_query_name="external_food"
+        )
+    food_id:int = models.BigIntegerField(
+        null=False,
+        blank=False
+    )
+
 class Food (models.Model):
+    owner = models.ForeignKey(
+        "client_app.Client",
+        on_delete=models.CASCADE,
+        related_name="created_foods",
+        related_query_name="created_food"
+    )
     name:str = models.CharField(
         max_length=50
     )
@@ -30,6 +49,7 @@ class Food (models.Model):
         "FR" : "Fruit",
         "GR" : "Grain",
         "DA" : "Dairy",
+        "PR" : "Protein",
         "OT" : "Other",
     }
     food_type:str = models.CharField(
@@ -44,12 +64,12 @@ class Food (models.Model):
         blank=False,
         default=0
     )
-    saturatedfat:int = models.IntegerField(
+    saturated_fat:int = models.IntegerField(
         null=False,
         blank=False,
         default=0
     )
-    transfat:int = models.IntegerField(
+    trans_fat:int = models.IntegerField(
         null=False,
         blank=False,
         default=0

@@ -41,3 +41,10 @@ The backend will be made with Django and will consist of the following data:
 |Category|Type|Required|Notes|
 |--------|----|--------|-----|
 |meal    |MtM |True    ||
+
+## Functions:
+    - Search through foods (must be logged in)
+    - Add food to db (must be logged in)
+    - Remove food from db (must be logged in and food owner)
+    - Add meal to db (must be logged in)
+    - Remove meal from db (must be logged in and meal owner)

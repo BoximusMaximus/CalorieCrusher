@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Button } from 'react-bootstrap'
+import api from '../axiosinterceptors'
 
-export default function APITesting() {
+export default function GetFoodsTest() {
     const [foods, setFoods] = useState([])
+    // const [currentUser, setCurrentUser] = useState([])
 
-    const url = "http://localhost:8000/api/v1/"
     async function GetFoods () {
-       await axios.get(`${url}items/food/`)
+       await api.get("items/food/")
         .then((response) => {
             console.log(response.data)
             setFoods(response.data.map((food:any) => food.name))
