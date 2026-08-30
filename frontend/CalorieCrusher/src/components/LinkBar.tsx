@@ -70,7 +70,6 @@ export default function LinkBar() {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             
-            <Nav.Link href="/apitest">Test</Nav.Link>
             <DynamicLinks/>
           </Nav>
         </Navbar.Collapse>

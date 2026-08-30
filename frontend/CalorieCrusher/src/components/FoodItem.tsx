@@ -42,7 +42,10 @@ export default function FoodItem({food_id, food_name, food_data, ReloadFoods}:{f
     },[editedFoodData])
   
   return (
-    <Card>
+    <Card
+    bg='dark'
+    text='light'
+    border='danger'>
         <Card.Body>
           <Card.Title>{food_name}</Card.Title>
             <ul>
