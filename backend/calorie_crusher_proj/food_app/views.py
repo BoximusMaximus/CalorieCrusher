@@ -7,8 +7,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 import requests
 
 from client_app.services import FatSecretTokenError, get_fatsecret_token
-from .models import Food,ExternalFood,Meal,Day
-from .serializers import FoodSerializer, ExternalFoodSerializer, MealSerializer,DaySerializer
+from .models import Food,Meal,Day
+from .serializers import FoodSerializer,  MealSerializer,DaySerializer
 
 # Create your views here.
 class AllDays(APIView):
@@ -46,18 +46,6 @@ class AllFoods(APIView):
             status=status.HTTP_200_OK,
         )
 
-class AllExternalFoods(APIView):
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        foods = ExternalFood.objects.filter(
-            owner=request.user
-        ).order_by("id")
-        serializer = ExternalFoodSerializer(foods, many=True)
-
-        return Response(
-            serializer.data,
-            status=status.HTTP_200_OK,
-        )
 
 class FoodById(APIView):
     permission_classes = [IsAuthenticated]
@@ -92,30 +80,6 @@ class FoodById(APIView):
             status=status.HTTP_204_NO_CONTENT,
         )
 
-class ExternalFoodById(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, food_id):
-        food = get_object_or_404(ExternalFood, id=food_id, owner=request.user)
-        serializer = ExternalFoodSerializer(food)
-
-        return Response(
-            serializer.data,
-            status=status.HTTP_200_OK,
-        )
-
-    def delete(self, request, food_id):
-        food = get_object_or_404(
-            ExternalFood,
-            food_id=food_id,
-            owner=request.user
-        )
-
-        food.delete()
-
-        return Response(
-            status=status.HTTP_204_NO_CONTENT,
-        )
 
 class FoodByType(APIView):
     permission_classes = [IsAuthenticated]
@@ -145,18 +109,6 @@ class CreateFood(APIView):
         else:
             return Response(new_food.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CreateExternalFood(APIView):
-    permission_classes = [IsAuthenticated]
-    def post(self, request):
-        new_food = ExternalFoodSerializer(data=request.data)
-        if new_food.is_valid():
-            new_food.save(owner=request.user)
-            return Response(
-                new_food.data,
-                status=status.HTTP_201_CREATED,
-        )
-        else:
-            return Response(new_food.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class SearchFatsecretFoods(APIView):
     permission_classes = [IsAuthenticated]

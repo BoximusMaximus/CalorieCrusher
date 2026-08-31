@@ -38,16 +38,6 @@ export default function Login() {
         return <h4>{errorMessage}</h4>
     }
 
-    async function PrintUser(){
-        await api.get("/users/me/")
-        .then((response) => {
-            console.log(response.data)
-        }) .catch((err) => {
-            console.log(err)
-        }) .finally(() => {
-            console.log("finished fetching user data")
-        })
-    }
 
   return (
     <>
@@ -65,7 +55,7 @@ export default function Login() {
             </Button>
             <ShowErrorMessage/>
         </Form>
-        <Button onClick={PrintUser}>See User Data (DEVELOPER)</Button>
+
     </>
   )
 }

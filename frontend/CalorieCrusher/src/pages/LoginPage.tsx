@@ -11,11 +11,10 @@ export default function LoginPage() {
   return (
     <>
     <Tabs
-    data-bs-theme="dark"
     activeKey={key}
     onSelect={(k:any) => setKey(k)}
     id="Login or Signup"
-    className="mb-3"
+    className="mb-4"
     fill> 
         <Tab eventKey="signin" title="Sign In" >
             <Login />

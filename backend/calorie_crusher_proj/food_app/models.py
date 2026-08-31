@@ -22,18 +22,6 @@ class Meal (models.Model):
     )
 
 
-class ExternalFood (models.Model):
-    owner = models.ForeignKey(
-            "client_app.Client",
-            on_delete=models.CASCADE,
-            related_name="external_foods",
-            related_query_name="external_food"
-        )
-    food_id:int = models.BigIntegerField(
-        null=False,
-        blank=False
-    )
-
 class Food (models.Model):
     owner = models.ForeignKey(
         "client_app.Client",

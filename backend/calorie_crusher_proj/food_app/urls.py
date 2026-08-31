@@ -11,10 +11,6 @@ urlpatterns = [
     #Fatsecret API Call
     path("external/food/search/", SearchFatsecretFoods.as_view(), name="search_fatsecret_foods"),
 
-    # Fatsecret foods
-    path("external/food/", AllFoods.as_view(), name="all_foods"),
-    path("external/food/create/", CreateFood.as_view(), name="create_food"),
-    path("external/food/<int:food_id>/", FoodById.as_view(), name="a_food"),
 
     path("meal/", AllMeals.as_view(), name="all_meals"),
 
