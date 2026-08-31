@@ -88,8 +88,7 @@ export default function MealTrackerPage() {
           <Button onClick={() => {setShowFoodCreator(true)}}>Create New Food</Button>
         </Col>
         <Col>
-        {/* <SearchFatSecret/> */}
-        <FindRecipe/>
+        <SearchFatSecret/>
         </Col>
     </Row>
     <CreateFood show={showFoodCreator} onHide={() => setShowFoodCreator(false)} ReturnFoodData={setNewFoodData}/>

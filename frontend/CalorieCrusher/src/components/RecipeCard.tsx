@@ -10,7 +10,7 @@ export default function RecipeCard({recipeName, recipeImageUrl, recipeUrl}:{reci
             </Card.Header>
             <Card.Img src={recipeImageUrl}/>
             <Card.Footer>
-                {recipeUrl}
+                <a href={recipeUrl} target="_blank">Click here to visit recipe link</a>
             </Card.Footer>
         </Card.Body>
     </Card>
