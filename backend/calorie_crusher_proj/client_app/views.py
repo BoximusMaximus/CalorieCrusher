@@ -12,7 +12,6 @@ from django.shortcuts import get_object_or_404
 from .services import FatSecretTokenError, get_fatsecret_token
 from .models import Client
 from .serializers import ClientSerializer
-from food_app.models import Day
 
 # Create your views here.
 class Sign_Up(APIView):
@@ -25,7 +24,6 @@ class Sign_Up(APIView):
             password= new_user_data.get("password")
         )
 
-        Day.objects.create(client=new_client_inst)
         token_inst = Token.objects.create(user=new_client_inst)
 
         return Response(

@@ -3,7 +3,7 @@ import { Button, Col, Row } from 'react-bootstrap'
 import { useParams } from 'react-router'
 import CreateFood from '../components/CreateFood'
 import api from '../axiosinterceptors'
-import FoodItem from '../components/FoodItem'
+import FoodItem from '../cards/FoodItem'
 import SearchFatSecret from '../components/SearchFatSecret'
 import FindRecipe from '../components/FindRecipe'
 
@@ -62,7 +62,7 @@ export default function MealTrackerPage() {
     let key = 0
     const listItems = allFoods.map((food:any) => <FoodItem key={key++} food_data={food.food_data} food_name={food.food_name} food_id={food.food_id} ReloadFoods={GetFoods}/>)
     return <div>{listItems}</div>
-    }
+  }
 
   useEffect(() => {
     console.log(`My New Food Data:`)
@@ -88,7 +88,7 @@ export default function MealTrackerPage() {
           <Button onClick={() => {setShowFoodCreator(true)}}>Create New Food</Button>
         </Col>
         <Col>
-        <SearchFatSecret/>
+        <SearchFatSecret ReturnFoodData={setNewFoodData}/>
         </Col>
     </Row>
     <CreateFood show={showFoodCreator} onHide={() => setShowFoodCreator(false)} ReturnFoodData={setNewFoodData}/>

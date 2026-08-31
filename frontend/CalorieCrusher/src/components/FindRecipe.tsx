@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import RecipeCard from './RecipeCard'
+import RecipeCard from '../cards/RecipeCard'
 
 export default function FindRecipe() {
 

@@ -29,7 +29,6 @@ export default function CreateFood({
         existingSugar?:string,
         existingProtein?:string}) {
 
-
     function HandleFoodData(e:any){
         e.preventDefault()
         console.log("Handling Food Data")

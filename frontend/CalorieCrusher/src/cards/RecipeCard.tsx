@@ -3,7 +3,8 @@ import { Card } from 'react-bootstrap'
 
 export default function RecipeCard({recipeName, recipeImageUrl, recipeUrl}:{recipeName:string, recipeImageUrl:string, recipeUrl:string}) {
   return (
-    <Card style={{ maxWidth: '20rem' }}>
+    <Card style={{ maxWidth: '20rem' }}
+    text='light'>
         <Card.Body>
             <Card.Header>
                 {recipeName}

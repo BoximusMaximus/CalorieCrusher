@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import api from '../axiosinterceptors'
 import { Button, Form } from 'react-bootstrap'
+import FoodItem from '../cards/FoodItem'
+import FatSecretFoodCard from '../cards/FatSecretFoodCard'
 
-export default function SearchFatSecret() {
+export default function SearchFatSecret({ReturnFoodData}:{ReturnFoodData:any}) {
+
+    const [foodList, setFoodList] = useState([])
 
     function HandleSearch(e:any){
         e.preventDefault()
@@ -17,9 +21,15 @@ export default function SearchFatSecret() {
             {
                 params: {
                     query: query
-                }
+                    }
             }).then((response) => {
                 console.log(response.data)
+                setFoodList(response.data.foods.food.map((food:any) => {
+                return {
+                  food_name:food.food_name,
+                  food_brand:food.brand_name, 
+                  food_description: food.food_description
+                  }}))
             }) .catch((err) => {
                 console.log(err)
             }) .finally (() => {
@@ -27,6 +37,13 @@ export default function SearchFatSecret() {
                 console.log("Seached FatSecret for Food")
             })
     }
+
+    function ShowFoods(){
+        let key = 0
+        const listItems = foodList.map((food:any) => <FatSecretFoodCard key={key++} food_name={food.food_name} food_brand={food.food_brand} food_description={food.food_description} ReturnFoodData={ReturnFoodData}/>)
+        return <div>{listItems}</div>
+      }
+
     return (
     <>
         <Form onSubmit={HandleSearch}>
@@ -41,6 +58,7 @@ export default function SearchFatSecret() {
 
             <Button type="submit">Search</Button>
         </Form>
+        <ShowFoods/>
     </>
   )
 }

@@ -7,20 +7,10 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 import requests
 
 from client_app.services import FatSecretTokenError, get_fatsecret_token
-from .models import Food,Meal,Day
-from .serializers import FoodSerializer,  MealSerializer,DaySerializer
+from .models import Food,Meal
+from .serializers import FoodSerializer,  MealSerializer, FoodItemSerializer
 
 # Create your views here.
-class AllDays(APIView):
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        days = Day.objects.all().order_by("id")
-        serializer = DaySerializer(days, many=True)
-
-        return Response(
-            serializer.data,
-            status=status.HTTP_200_OK,
-        )
 
 class AllMeals(APIView):
     permission_classes = [IsAuthenticated]
@@ -32,6 +22,11 @@ class AllMeals(APIView):
             serializer.data,
             status=status.HTTP_200_OK,
         )
+
+class MealCalories(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        pass
 
 class AllFoods(APIView):
     permission_classes = [IsAuthenticated]
@@ -105,9 +100,34 @@ class CreateFood(APIView):
             return Response(
                 new_food.data,
                 status=status.HTTP_201_CREATED,
-        )
+            )
         else:
             return Response(new_food.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CreateMeal(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        new_meal = MealSerializer(data=request.data)
+        if new_meal.is_valid():
+            new_meal.save(owner=request.user)
+            return Response(
+                new_meal.data,
+                status=status.HTTP_201_CREATED,
+            )
+        else:
+            return Response(new_meal.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AddFoodToMeal(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        food_item = FoodItemSerializer(data=request.data)
+        if food_item.is_valid():
+            return Response(
+                food_item.data,
+                status=status.HTTP_201_CREATED,
+            )
+        else:
+            return Response(food_item.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SearchFatsecretFoods(APIView):
