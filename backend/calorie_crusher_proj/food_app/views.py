@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+import requests
 
 from client_app.services import FatSecretTokenError, get_fatsecret_token
 from .models import Food,ExternalFood,Meal,Day
@@ -161,7 +162,7 @@ class SearchFatsecretFoods(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        search_expression = request.query_params.get("q", "").strip()
+        search_expression = request.query_params.get("query", "").strip()
 
         if not search_expression:
             return Response(

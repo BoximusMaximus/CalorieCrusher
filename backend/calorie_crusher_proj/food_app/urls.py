@@ -9,7 +9,7 @@ urlpatterns = [
     path("food/<int:food_id>/", FoodById.as_view(), name="a_food"),
 
     #Fatsecret API Call
-    path("external/food/search/", SearchFatSecretFoods.as_view, name="search_fatsecret_foods")
+    path("external/food/search/", SearchFatsecretFoods.as_view(), name="search_fatsecret_foods"),
 
     # Fatsecret foods
     path("external/food/", AllFoods.as_view(), name="all_foods"),

@@ -69,6 +69,7 @@ export default function LinkBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/recipes/">Recipe Finder</Nav.Link>
             
             <DynamicLinks/>
           </Nav>

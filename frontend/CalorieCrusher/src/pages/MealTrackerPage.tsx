@@ -4,9 +4,10 @@ import { useParams } from 'react-router'
 import CreateFood from '../components/CreateFood'
 import api from '../axiosinterceptors'
 import FoodItem from '../components/FoodItem'
+import SearchFatSecret from '../components/SearchFatSecret'
+import FindRecipe from '../components/FindRecipe'
 
 export default function MealTrackerPage() {
-  const { username } = useParams()
   const [newFoodData, setNewFoodData] = useState({})
   const [showFoodCreator, setShowFoodCreator] = useState(false)
   const [allFoods, setAllFoods] = useState<any>([])
@@ -59,7 +60,7 @@ export default function MealTrackerPage() {
 
   function ShowFoods(){
     let key = 0
-    const listItems = allFoods.map(food => <FoodItem key={key++} food_data={food.food_data} food_name={food.food_name} food_id={food.food_id} ReloadFoods={GetFoods}/>)
+    const listItems = allFoods.map((food:any) => <FoodItem key={key++} food_data={food.food_data} food_name={food.food_name} food_id={food.food_id} ReloadFoods={GetFoods}/>)
     return <div>{listItems}</div>
     }
 
@@ -67,6 +68,7 @@ export default function MealTrackerPage() {
     console.log(`My New Food Data:`)
     console.log(newFoodData)
     PostFood()
+    GetFoods()
   },[newFoodData])
 
   useEffect(() => {
@@ -85,7 +87,10 @@ export default function MealTrackerPage() {
           <Button onClick={GetFoods}>Refresh Foods</Button>
           <Button onClick={() => {setShowFoodCreator(true)}}>Create New Food</Button>
         </Col>
-        <Col></Col>
+        <Col>
+        {/* <SearchFatSecret/> */}
+        <FindRecipe/>
+        </Col>
     </Row>
     <CreateFood show={showFoodCreator} onHide={() => setShowFoodCreator(false)} ReturnFoodData={setNewFoodData}/>
     </>
