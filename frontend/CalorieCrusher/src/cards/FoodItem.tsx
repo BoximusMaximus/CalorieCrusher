@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import api from '../axiosinterceptors'
-import CreateFood from './CreateFood'
+import CreateFood from '../components/CreateFood'
 
 export default function FoodItem({food_id, food_name, food_data, ReloadFoods}:{food_id:string, food_name:string, food_data:any, ReloadFoods:any}) {
   const [showFoodEdit, setShowFoodEdit] = useState(false)
@@ -36,13 +36,14 @@ export default function FoodItem({food_id, food_name, food_data, ReloadFoods}:{f
   }
 
   useEffect(() => {
-      console.log(`My Edited Food Data:`)
-      console.log(editedFoodData)
       HandleEdit()
     },[editedFoodData])
   
   return (
-    <Card>
+    <Card
+    bg='dark'
+    text='light'
+    border='danger'>
         <Card.Body>
           <Card.Title>{food_name}</Card.Title>
             <ul>

@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Row } from 'react-bootstrap'
+import { Button, Col, Row, Tab, Tabs } from 'react-bootstrap'
 import { useParams } from 'react-router'
 import CreateFood from '../components/CreateFood'
 import api from '../axiosinterceptors'
-import FoodItem from '../components/FoodItem'
+import FoodItem from '../cards/FoodItem'
+import SearchFatSecret from '../components/SearchFatSecret'
+import FindRecipe from '../components/FindRecipe'
+import MealManager from '../components/MealManager'
 
 export default function MealTrackerPage() {
-  const { username } = useParams()
   const [newFoodData, setNewFoodData] = useState({})
   const [showFoodCreator, setShowFoodCreator] = useState(false)
   const [allFoods, setAllFoods] = useState<any>([])
+  const [key, setKey] = useState("myfood")
 
   async function GetFoods () {
     await api.get("items/food/")
@@ -43,7 +46,6 @@ export default function MealTrackerPage() {
 
   async function PostFood(){
     if (Object.keys(newFoodData).length == 0){
-      console.log("Newfood value is now empty")
       return
     }
     await api.post("items/food/create/", newFoodData)
@@ -59,14 +61,13 @@ export default function MealTrackerPage() {
 
   function ShowFoods(){
     let key = 0
-    const listItems = allFoods.map(food => <FoodItem key={key++} food_data={food.food_data} food_name={food.food_name} food_id={food.food_id} ReloadFoods={GetFoods}/>)
+    const listItems = allFoods.map((food:any) => <FoodItem key={key++} food_data={food.food_data} food_name={food.food_name} food_id={food.food_id} ReloadFoods={GetFoods}/>)
     return <div>{listItems}</div>
-    }
+  }
 
   useEffect(() => {
-    console.log(`My New Food Data:`)
-    console.log(newFoodData)
     PostFood()
+    GetFoods()
   },[newFoodData])
 
   useEffect(() => {
@@ -78,14 +79,33 @@ export default function MealTrackerPage() {
     <>
     <Row>
         <Col>
-          <ShowFoods/>
+          <Tabs
+          activeKey={key}
+          onSelect={(k:any) => setKey(k)}
+          id="Login or Signup"
+          className="mb-4"
+          fill> 
+          <Tab eventKey="myfood" title="MyFood" >
+            <Button size='lg' onClick={GetFoods}>Refresh Foods</Button>
+            <Button size='lg' onClick={() => {setShowFoodCreator(true)}}>Create New Food</Button>
+            <hr className="my-2" />
+            <h1>My Foods</h1>
+            <hr className="my-2" />
+            <ShowFoods/>
+          </Tab>
+          <Tab eventKey="findfood" title="Find Food">
+              <SearchFatSecret ReturnFoodData={setNewFoodData}/>
+          </Tab>
+        </Tabs>
+          
           
         </Col>
-        <Col xs={6}>
-          <Button onClick={GetFoods}>Refresh Foods</Button>
-          <Button onClick={() => {setShowFoodCreator(true)}}>Create New Food</Button>
+        <Col xs={5}>
+          
         </Col>
-        <Col></Col>
+        <Col>
+          <MealManager/>
+        </Col>
     </Row>
     <CreateFood show={showFoodCreator} onHide={() => setShowFoodCreator(false)} ReturnFoodData={setNewFoodData}/>
     </>
