@@ -18,6 +18,7 @@ export default function MealManager() {
       console.log(err)
     }) .finally(() => {
       console.log("Meal Created")
+      GetMeals()
     })
   }
 
@@ -26,7 +27,7 @@ export default function MealManager() {
     .then((response) => {
       console.log(response.data)
       setAllMeals(response.data)
-      ShowFoods()
+      ShowMeals()
     }) .catch((err) => {
       console.log(err)
     }) .finally(() => {
@@ -43,9 +44,9 @@ export default function MealManager() {
     GetMeals()
   },[])
 
-  function ShowFoods(){
+  function ShowMeals(){
     let key = 0
-    const listItems = allMeals.map((meal:any) => <MealCard key={key++} meal_name={meal.name} />)
+    const listItems = allMeals.map((meal:any) => <MealCard key={key++} meal_id={meal.id} meal_name={meal.name} RefreshMeals={GetMeals} />)
     return <div>{listItems}</div>
   }
 
@@ -57,7 +58,7 @@ export default function MealManager() {
       <Button onClick={GetMeals}>
         Refresh Meals
       </Button>
-      <ShowFoods/>
+      <ShowMeals/>
       <EditMeal show={showMealCreator} onHide={() => {setShowMealCreator(false)}} ReturnMealData={setNewMealData}/>
     </>
   )

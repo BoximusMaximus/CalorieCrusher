@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 import requests
 
 from client_app.services import FatSecretTokenError, get_fatsecret_token
-from .models import Food,Meal
+from .models import Food,Meal,FoodItem
 from .serializers import FoodSerializer,  MealSerializer, FoodItemSerializer
 
 # Create your views here.
@@ -145,17 +145,75 @@ class CreateMeal(APIView):
         else:
             return Response(new_meal.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# class AddFoodToMeal(APIView):
-#     permission_classes = [IsAuthenticated]
-#     def post(self, request):
-#         food_item = FoodItemSerializer(data=request.data)
-#         if food_item.is_valid():
-#             return Response(
-#                 food_item.data,
-#                 status=status.HTTP_201_CREATED,
-#             )
-#         else:
-#             return Response(food_item.errors, status=status.HTTP_400_BAD_REQUEST)
+class AddFoodToMeal(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, meal_id, food_id):
+        meal = get_object_or_404(Meal, id=meal_id, owner=request.user)
+        food = get_object_or_404(Food, id=food_id, owner=request.user)
+
+        serializer = FoodItemSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save(
+                meal=meal,
+                food=food,
+            )
+
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED,
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+class FoodItemByFoodId(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, food_id):
+        food_item = get_object_or_404(FoodItem, food=food_id)
+        serializer = MealSerializer(food_item)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK,
+        )
+
+    def delete(self, request, food_id):
+        attached_food = get_object_or_404(Food, id=food_id, owner=request.user)
+        food_item = get_object_or_404(FoodItem, food=attached_food)
+
+        food_item.delete()
+
+        return Response(
+            status=status.HTTP_204_NO_CONTENT,
+        )
+class FoodItemsForMeal(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, meal_id):
+        meal = get_object_or_404(
+            Meal,
+            id=meal_id,
+            owner=request.user,
+        )
+
+        food_items = FoodItem.objects.filter(
+            meal=meal,
+        ).order_by("id")
+
+        serializer = FoodItemSerializer(
+            food_items,
+            many=True,
+        )
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK,
+        )
 
 
 class SearchFatsecretFoods(APIView):

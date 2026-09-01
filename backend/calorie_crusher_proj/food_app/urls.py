@@ -15,5 +15,11 @@ urlpatterns = [
     path("meal/", AllMeals.as_view(), name="all_meals"),
     path("meal/create/", CreateMeal.as_view(), name="create_meal"),
     path("meal/<int:meal_id>/", MealById.as_view(), name="a_meal"),
+
+    # FoodItemTable
+    path("food_item/meal/<int:meal_id>/food/<int:food_id>/", AddFoodToMeal.as_view(), name="add_food_item_to_meal"),
+    path("food_item/from_food/<int:food_id>/", FoodItemByFoodId.as_view(), name="get_or_delete_food_item"),
+    path("food_item/by_meal/<int:meal_id>/", FoodItemsForMeal.as_view(), name="get_all_meal_food_items"),
+
     
 ]

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Food, Meal
+from .models import Food, Meal, FoodItem
 
 
 class FoodSerializer(serializers.ModelSerializer):
@@ -10,6 +10,7 @@ class FoodSerializer(serializers.ModelSerializer):
         read_only_fields = ["owner", "id"]
 
 class MealSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Meal
         fields = "__all__"
@@ -17,5 +18,6 @@ class MealSerializer(serializers.ModelSerializer):
 
 class FoodItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Meal
+        model = FoodItem
         fields = "__all__"
+        read_only_fields = ["food", "meal", "id"]
