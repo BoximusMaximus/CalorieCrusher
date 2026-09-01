@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import api from '../axiosinterceptors'
 import { Button } from 'react-bootstrap'
 import EditMeal from './EditMeal'
@@ -6,12 +6,12 @@ import MealCard from '../cards/MealCard'
 
 export default function MealManager() {
   const [showMealCreator, setShowMealCreator] = useState(false)
-  const [newMealData, setNewMealData] = useState({})
   const [allMeals, setAllMeals] = useState([])
 
 
-  async function CreateMeal(){
-    await api.post("items/meal/create/", {name: newMealData.name})
+
+  async function CreateMeal(mealData:any){
+    await api.post("items/meal/create/", mealData)
     .then((response) => {
       console.log(response.data)
     }) .catch((err) => {
@@ -36,11 +36,6 @@ export default function MealManager() {
   }
 
   useEffect(() => {
-    CreateMeal()
-    GetMeals()
-  },[newMealData])
-
-  useEffect(() => {
     GetMeals()
   },[])
 
@@ -59,7 +54,7 @@ export default function MealManager() {
         Refresh Meals
       </Button>
       <ShowMeals/>
-      <EditMeal show={showMealCreator} onHide={() => {setShowMealCreator(false)}} ReturnMealData={setNewMealData}/>
+      <EditMeal show={showMealCreator} onHide={() => {setShowMealCreator(false)}} ReturnMealData={CreateMeal}/>
     </>
   )
 }

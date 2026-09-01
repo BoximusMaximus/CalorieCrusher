@@ -1,4 +1,3 @@
-import React from 'react'
 import Login from '../components/Login'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';

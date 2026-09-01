@@ -1,11 +1,11 @@
 import axios from 'axios'
-import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import RecipeCard from '../cards/RecipeCard'
+import { useState } from 'react'
 
 export default function FindRecipe() {
 
-    const [recipes, setRecipes] = useState([])
+    const [recipes, setRecipes] = useState<any>([])
 
     function HandleSearch(e:any){
         e.preventDefault()

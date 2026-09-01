@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Col, Row, Tab, Tabs } from 'react-bootstrap'
-import { useParams } from 'react-router'
 import CreateFood from '../components/CreateFood'
 import api from '../axiosinterceptors'
 import FoodItem from '../cards/FoodItem'
 import SearchFatSecret from '../components/SearchFatSecret'
-import FindRecipe from '../components/FindRecipe'
 import MealManager from '../components/MealManager'
 
 export default function MealTrackerPage() {

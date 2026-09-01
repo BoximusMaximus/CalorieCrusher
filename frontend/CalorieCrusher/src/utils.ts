@@ -8,6 +8,7 @@ export async function GetUserInfo(){
         return response.data
     }) .catch((err) => {
         console.log("NO USER LOGGED IN")
+        console.log(err)
         return false
     }) .finally(() => {
         console.log("finished fetching user data")

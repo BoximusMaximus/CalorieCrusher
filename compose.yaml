@@ -12,6 +12,7 @@ services:
   django:
     build: ./backend/calorie_crusher_proj/.
     container_name: cc-django-container
+    command: sh -c "python manage.py migrate && gunicorn calorie_crusher_proj.wsgi --bind 0.0.0.0:8000 --reload"
     ports:
       - "8000:8000"
     env_file:
@@ -21,3 +22,14 @@ services:
       - ./backend/calorie_crusher_proj/:/app
     depends_on:
       - db
+
+  nginx:
+    build: ./frontend/CalorieCrusher
+    container_name: nginx-container
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - django

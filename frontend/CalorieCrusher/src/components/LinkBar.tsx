@@ -1,6 +1,5 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { Button, Container, Nav, NavDropdown } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import { Button, Container, Nav } from 'react-bootstrap'
 import Navbar from "react-bootstrap/Navbar"
 import api from '../axiosinterceptors'
 import { GetUserInfo } from '../utils'

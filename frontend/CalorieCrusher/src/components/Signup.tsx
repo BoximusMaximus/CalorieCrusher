@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import api from '../axiosinterceptors';
@@ -29,6 +29,7 @@ export default function Signup() {
             console.log("i am .then!!!")
             navigate(`/profile/${userData.username}`)
         }).catch((err) => {
+            console.log(err)
             setErrorMessage("account already created")
         }).finally(() => {
             console.log("post complete")

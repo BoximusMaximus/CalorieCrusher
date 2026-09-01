@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button, Col, FloatingLabel, FormControl, Modal, Row } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form';
 
