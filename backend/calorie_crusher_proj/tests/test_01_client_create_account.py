@@ -7,7 +7,11 @@ class TestClientSignUp(TestCase):
         client = Client()
         response = client.post(
             reverse("signup"),
-            data={"username": "Cody83337", "password": "CodyBoxMan"},
+            data={
+                "username": "Cody83337",
+                "email":"chris83337@gmail.com",
+                "password": "CodyBoxMan"
+                },
             content_type="application/json",
         )
         print(response.content)
