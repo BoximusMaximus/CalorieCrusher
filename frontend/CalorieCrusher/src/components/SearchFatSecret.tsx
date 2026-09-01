@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import api from '../axiosinterceptors'
 import { Button, Form } from 'react-bootstrap'
-import FoodItem from '../cards/FoodItem'
 import FatSecretFoodCard from '../cards/FatSecretFoodCard'
 
 export default function SearchFatSecret({ReturnFoodData}:{ReturnFoodData:any}) {

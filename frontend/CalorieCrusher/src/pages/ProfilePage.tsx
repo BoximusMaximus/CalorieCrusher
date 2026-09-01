@@ -1,4 +1,3 @@
-import React from 'react'
 import { useParams } from 'react-router'
 
 
@@ -8,7 +7,7 @@ export default function ProfilePage() {
  
   return (
     <>
-      <div>{username}</div>
+      <div>username: {username}</div>
       
     </>
   )

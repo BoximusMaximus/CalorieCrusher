@@ -1,4 +1,3 @@
-import React from 'react'
 import { Card } from 'react-bootstrap'
 
 export default function RecipeCard({recipeName, recipeImageUrl, recipeUrl}:{recipeName:string, recipeImageUrl:string, recipeUrl:string}) {

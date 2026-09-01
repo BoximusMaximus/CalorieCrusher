@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import CreateFood from '../components/CreateFood'
 
