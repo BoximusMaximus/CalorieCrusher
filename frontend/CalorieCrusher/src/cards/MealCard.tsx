@@ -3,9 +3,10 @@ import { Button, Card } from 'react-bootstrap'
 import api from '../axiosinterceptors'
 import EditMeal from '../components/EditMeal'
 
-export default function MealCard({meal_id, meal_name, RefreshMeals, total_calories=0}:{meal_id:number, meal_name:string, RefreshMeals:any, total_calories?:number}) {
+export default function MealCard({meal_id, meal_name, RefreshMeals, }:{meal_id:number, meal_name:string, RefreshMeals:any}) {
 
   const [showEditMeal, setShowEditMeal] = useState(false)
+  const [totalCalories, setTotalCalories] = useState(0)
 
   async function DeleteMeal(){
     await api.delete(`items/meal/${meal_id}/`)
@@ -27,8 +28,42 @@ export default function MealCard({meal_id, meal_name, RefreshMeals, total_calori
       console.log(err)
     })
   }
+ async function GetTotalCalories() {
+    let attachedFoodItems:any = []
 
-  
+    await api.get(`items/food_item/by_meal/${meal_id}/`)
+      .then((response) => {
+        attachedFoodItems = response.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    await api.get("items/food/")
+      .then((response) => {
+        const allFoods = response.data
+        let calorieTotal = 0
+
+        attachedFoodItems.forEach((foodItem: any) => {
+          const attachedFood = allFoods.find(
+            (food: any) => food.id === foodItem.food
+          )
+
+          if (attachedFood) {
+            calorieTotal += attachedFood.kcal * foodItem.quantity
+          }
+        })
+
+        setTotalCalories(calorieTotal)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  useEffect(() => {
+    GetTotalCalories()
+  },[])
 
   return (
     <>
@@ -39,7 +74,7 @@ export default function MealCard({meal_id, meal_name, RefreshMeals, total_calori
             {meal_name}
           </Card.Title>
           <Card.Subtitle>
-            Calories:{total_calories}
+            Calories:{totalCalories}
           </Card.Subtitle>
           <Button variant='outline-primary' onClick={() => {setShowEditMeal(true)}}>Manage Foods</Button>
           <Button variant='outline-danger' onClick={DeleteMeal}>Delete</Button>
