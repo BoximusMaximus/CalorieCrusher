@@ -14,5 +14,6 @@ urlpatterns = [
     # My db Meals
     path("meal/", AllMeals.as_view(), name="all_meals"),
     path("meal/create/", CreateMeal.as_view(), name="create_meal"),
+    path("meal/<int:meal_id>/", MealById.as_view(), name="a_meal"),
     
 ]

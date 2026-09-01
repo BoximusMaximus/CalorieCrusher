@@ -62,6 +62,8 @@ export default function CreateFood({
         <Modal.Header >
             <Modal.Title>Food</Modal.Title>
         </Modal.Header>
+        <Modal.Body>
+
         
         <Form onSubmit={HandleFoodData}>
             <Row>
@@ -146,6 +148,7 @@ export default function CreateFood({
             <Button variant='primary' type='submit'>Save</Button>
         </Modal.Footer>
         </Form>
+        </Modal.Body>
     </Modal>
   )
 }

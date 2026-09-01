@@ -36,8 +36,6 @@ export default function FoodItem({food_id, food_name, food_data, ReloadFoods}:{f
   }
 
   useEffect(() => {
-      console.log(`My Edited Food Data:`)
-      console.log(editedFoodData)
       HandleEdit()
     },[editedFoodData])
   
